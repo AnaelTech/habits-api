@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // absence of a value, avoiding potential NullPointerExceptions.
     Optional<User> getUserByEmail(String email);
 
+    boolean existsByEmail(String email);
+
 }
