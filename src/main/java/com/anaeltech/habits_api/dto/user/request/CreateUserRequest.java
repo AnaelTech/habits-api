@@ -1,0 +1,11 @@
+package com.anaeltech.habits_api.dto.user.request;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateUserRequest(
+        @Email String email,
+        @NotBlank String password,
+        @NotBlank String firstName,
+        @NotBlank String lastName) {
+}

@@ -3,6 +3,7 @@ package com.anaeltech.habits_api.entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,9 +48,9 @@ public class User {
 
     private UserGender gender;
 
-    private String size;
+    private Integer size;
 
-    private String weight;
+    private BigDecimal weight;
 
     private LocalDateTime createdAt;
 
