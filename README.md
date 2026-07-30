@@ -83,6 +83,40 @@ http://localhost:8080/api
 ./mvnw test
 ```
 
+## Challenges Encountered & Solutions
+
+### `MapStruct Bean Not Found`
+
+🚨 Problem:
+During application startup, Spring failed to initialize the context with the following error:
+
+No qualifying bean of type 'UserMapper' available
+
+⚠️ Cause:
+The UserMapper interface was correctly annotated with @Mapper(componentModel = "spring"), but MapStruct was not generating the implementation class required by Spring.
+
+✅ Solution:
+Added the MapStruct annotation processor configuration in Maven to enable automatic generation of mapper implementations during compilation.
+
+### `Exception Handling and HTTP Status Management`
+
+🚨 Problem:
+Custom exceptions such as UserNotFoundException were correctly thrown by the service layer, but the API returned a 500 Internal Server Error instead of the expected HTTP status.
+
+⚠️ Cause:
+Spring did not know how to translate custom exceptions into HTTP responses.
+
+✅ Solution:
+Implemented a global exception handler using @RestControllerAdvice and @ExceptionHandler to centralize exception handling and return proper HTTP responses (404 Not Found, 409 Conflict, 400 Bad Request, etc.).
+
+### `Error Response Standardization`
+
+🚨 Problem:
+Each exception handler was responsible for creating its own error response object, which could lead to duplicated code.
+
+✅ Solution:
+Created a reusable method inside the global exception handler to centralize the creation of ErrorResponse objects and ensure consistent API error responses.
+
 ## Licence
 
 Personal project.
