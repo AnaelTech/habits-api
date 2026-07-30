@@ -4,7 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.anaeltech.habits_api.exception.user.UserEmailAlreadyExist;
+import com.anaeltech.habits_api.exception.user.UserEmailAlreadyExistException;
 import com.anaeltech.habits_api.exception.user.UserNotFoundException;
 import com.anaeltech.habits_api.mapper.UserMapper;
 import com.anaeltech.habits_api.repository.UserRepository;
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(
                 passwordEncoder.encode(createUserRequest.password()));
         if (userRepository.existsByEmail(user.getEmail())) {
-            throw new UserEmailAlreadyExist(user.getEmail());
+            throw new UserEmailAlreadyExistException(user.getEmail());
         }
 
         User savedUser = userRepository.save(user);

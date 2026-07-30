@@ -1,6 +1,6 @@
 package com.anaeltech.habits_api.service.user.impl;
 
-import com.anaeltech.habits_api.exception.user.UserPasswordDoesNotMatch;
+import com.anaeltech.habits_api.exception.user.UserPasswordDoesNotMatchException;
 import com.anaeltech.habits_api.entity.User;
 import com.anaeltech.habits_api.exception.user.UserNotFoundException;
 import com.anaeltech.habits_api.repository.UserRepository;
@@ -29,7 +29,7 @@ public class UserPasswordServiceImpl implements UserPasswordService {
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new UserPasswordDoesNotMatch();
+            throw new UserPasswordDoesNotMatchException();
         }
         String hashedPassword = passwordEncoder.encode(newPassword);
         user.setPassword(hashedPassword);
