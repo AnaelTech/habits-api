@@ -1,8 +1,8 @@
 package com.anaeltech.habits_api.exception.user;
 
-public class UserPasswordDoesNotMatch extends RuntimeException {
+public class UserPasswordDoesNotMatchException extends RuntimeException {
 
-    public UserPasswordDoesNotMatch() {
+    public UserPasswordDoesNotMatchException() {
         super("User password does not match");
     }
 

@@ -1,8 +1,8 @@
 package com.anaeltech.habits_api.exception.user;
 
-public class UserEmailAlreadyExist extends RuntimeException {
+public class UserEmailAlreadyExistException extends RuntimeException {
 
-    public UserEmailAlreadyExist(String email) {
+    public UserEmailAlreadyExistException(String email) {
         super("User with email " + email + " already exists");
     }
 
