@@ -3,11 +3,14 @@ package com.anaeltech.habits_api.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.anaeltech.habits_api.dto.user.request.CreateUserRequest;
 import com.anaeltech.habits_api.dto.user.response.UserResponse;
 import com.anaeltech.habits_api.service.user.UserService;
+import com.anaeltech.habits_api.service.user.impl.UserProfileServiceImpl;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,9 +28,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserController {
 
     private final UserService userService;
+    private final UserProfileServiceImpl userProfileService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserProfileServiceImpl userProfileService) {
         this.userService = userService;
+        this.userProfileService = userProfileService;
     }
 
     @Operation(summary = "Get user by ID", description = "Retrieve a user by their unique ID.", responses = {
@@ -60,6 +65,18 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Upload profile picture", description = "Upload a profile picture for the user.", responses = {
+            @ApiResponse(responseCode = "200", description = "Profile picture uploaded successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PostMapping("/{id}/profile-picture")
+    public ResponseEntity<String> uploadProfilePicture(@PathVariable Long id,
+            @RequestParam("picture") MultipartFile pictureData) {
+        String profilePictureUrl = userProfileService.uploadProfilePicture(id, pictureData);
+        return ResponseEntity.ok(profilePictureUrl);
     }
 
 }
