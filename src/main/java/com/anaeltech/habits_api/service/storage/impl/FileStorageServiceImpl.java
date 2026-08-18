@@ -24,10 +24,10 @@ public class FileStorageServiceImpl implements FileStorageService {
     private final String profilePictureFolder;
     private final FileValidator fileValidator;
 
-    public FileStorageServiceImpl(StorageProperties storageProperties) {
+    public FileStorageServiceImpl(StorageProperties storageProperties, FileValidator fileValidator) {
         this.rootLocation = Paths.get(storageProperties.getLocation());
         this.profilePictureFolder = storageProperties.getFolders().getProfilePicture();
-        this.fileValidator = new FileValidator(storageProperties);
+        this.fileValidator = fileValidator;
     }
 
     @Override
